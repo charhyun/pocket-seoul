@@ -211,10 +211,8 @@ dialog p{color:var(--ink-soft);margin-bottom:18px}
   .cart-btn .lbl{display:none}
 }
 
-.test-strip{background:var(--sticker);color:var(--ink);font-size:14px;font-weight:600;text-align:center;padding:8px 16px}
 .drawer-foot select{width:100%;border:1.5px solid var(--ink);border-radius:10px;padding:10px 12px;font:500 15px 'Figtree';margin:4px 0 12px;background:#fff}
 .drawer-foot label{font-size:13px;font-weight:600}
-#pp-buttons{margin-top:6px;min-height:10px}
 .drawer-foot{max-height:68vh;overflow:auto}
 .paid{padding:32px 24px;text-align:center}
 .paid h3{font-size:24px;margin-bottom:8px}
@@ -222,7 +220,6 @@ dialog p{color:var(--ink-soft);margin-bottom:18px}
 </head>
 <body>
 
-<div class="test-strip" id="testStrip" hidden>Test mode — payments use the PayPal sandbox. No real money moves.</div>
 <div class="ship-strip">Shipping from Seoul to <b>Japan, China and the United States</b> by Korea Post</div>
 
 <header class="nav">
@@ -264,7 +261,7 @@ dialog p{color:var(--ink-soft);margin-bottom:18px}
       <div class="hero-facts">
         <div><strong>Every card checked</strong>under light, front and back</div>
         <div><strong>Tracked by Korea Post</strong>K-Packet or EMS, from Seoul</div>
-        <div><strong>Checkout with PayPal</strong>Card or PayPal balance, charged in USD</div>
+        <div><strong>Prices in USD</strong>with local-currency estimates</div>
       </div>
     </div>
     <div class="deck" aria-hidden="true">
@@ -407,19 +404,14 @@ dialog p{color:var(--ink-soft);margin-bottom:18px}
     <div class="sum"><span>Subtotal</span><span id="sub">—</span></div>
     <div class="sum"><span>Shipping <span class="note" id="shipMethod"></span></span><span id="shipLine">Choose a country</span></div>
     <div class="sum total"><span>Total</span><span id="tot">—</span></div>
-    <p class="note" id="payNote">Choose where to ship, then pay with PayPal or a card.</p>
-    <div id="pp-buttons"></div>
+    <p class="note" id="payNote">Online checkout is not open yet.</p>
   </div>
 </aside>
 
 <div class="toast" id="toast" role="status"></div>
 <script>
 /* ================= SETTINGS YOU EDIT ================= */
-// 1) PayPal: replace 'test' with your Live Client ID from developer.paypal.com
-//    (Apps & Credentials → Live → your app → Client ID). 'test' = sandbox, no real money.
-const PAYPAL_CLIENT_ID = 'test';
-
-// 2) Exchange rates (display only). Checkout is always charged in USD.
+// Exchange rates (display only).
 const KRW_PER_USD = 1450;
 const RATES = {USD:1, JPY:150, EUR:0.92, GBP:0.79, AUD:1.52, KRW:KRW_PER_USD};
 const SYM = {USD:'$', JPY:'¥', EUR:'€', GBP:'£', AUD:'A$', KRW:'₩'};
@@ -509,48 +501,11 @@ function renderCart(){
   else if(!t.post){$('#shipLine').textContent='Too heavy — email us'; $('#shipMethod').textContent='';}
   else {$('#shipLine').textContent=money(t.ship); $('#shipMethod').textContent='('+t.post.method+')';}
   $('#tot').textContent=t.total!=null?money(t.total):'—';
-  const ready=t.n>0 && t.total!=null;
-  $('#payNote').textContent = !t.n ? 'Add something to your cart to check out.'
-    : !shipTo ? 'Choose where to ship, then pay with PayPal or a card.'
-    : !t.post ? 'This order is over 3 kg. Email us and we will quote shipping.'
-    : `You'll be charged ${usdFmt(t.total)} USD.` + (cur!=='USD'?` Prices in ${cur} are estimates.`:'');
-  $('#pp-buttons').style.display=ready?'block':'none';
+  $('#payNote').textContent = 'Online checkout is not open yet. This cart only estimates totals.';
   save();
 }
 function add(id){const p=PRODUCTS.find(x=>x.id==id); if((cart[id]||0)>=p.stock)return; cart[id]=(cart[id]||0)+1; renderCart(); renderGrid(); toast('Added to cart: '+p.name);}
 function toast(t){const el=$('#toast'); el.textContent=t; el.classList.add('show'); clearTimeout(toast._t); toast._t=setTimeout(()=>el.classList.remove('show'),1800);}
-
-/* ---------- PayPal ---------- */
-function loadPayPal(){
-  const s=document.createElement('script');
-  s.src=`https://www.paypal.com/sdk/js?client-id=${encodeURIComponent(PAYPAL_CLIENT_ID)}&currency=USD&intent=capture`;
-  s.onload=renderButtons;
-  s.onerror=()=>{$('#pp-buttons').innerHTML='<p class="note">PayPal could not load. Refresh the page or try again later.</p>'};
-  document.head.appendChild(s);
-}
-function renderButtons(){
-  paypal.Buttons({
-    style:{layout:'vertical',shape:'pill',label:'pay'},
-    createOrder:(data,actions)=>{
-      const t=totals();
-      if(!t.n||t.total==null) throw new Error('Cart not ready');
-      const items=Object.keys(cart).map(id=>{const p=PRODUCTS.find(x=>x.id==id); return {name:p.name.slice(0,127), sku:'PS-'+p.id, unit_amount:{currency_code:'USD',value:p.price.toFixed(2)}, quantity:String(cart[id])}});
-      return actions.order.create({
-        purchase_units:[{
-          description:'Pocket Seoul order — ship to '+shipTo,
-          amount:{currency_code:'USD', value:t.total.toFixed(2), breakdown:{item_total:{currency_code:'USD',value:t.sub.toFixed(2)}, shipping:{currency_code:'USD',value:t.ship.toFixed(2)}}},
-          items
-        }],
-        application_context:{shipping_preference:'GET_FROM_FILE'}
-      });
-    },
-    onApprove:(data,actions)=>actions.order.capture().then(d=>{
-      const id=d.id; cart={}; save(); renderGrid(); renderCart();
-      $('#lines').innerHTML=`<div class="paid"><h3>Thank you — payment received</h3><p class="note">Order ID: <b>${id}</b><br>A receipt is on its way from PayPal. We'll email your tracking number when it ships.</p></div>`;
-    }),
-    onError:()=>toast('Payment did not go through. Nothing was charged — please try again.')
-  }).render('#pp-buttons');
-}
 
 /* ---------- shipping calculator ---------- */
 function initShipping(){
@@ -591,9 +546,8 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape'&&drawer.classList.co
 $('#dropForm').addEventListener('submit',e=>{e.preventDefault(); const v=$('#email').value.trim(), m=$('#dropMsg'); if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)){m.textContent='Enter an email like name@example.com.';return} m.textContent='Sign-up isn\'t connected yet. Follow us on Instagram for drops.';});
 
 /* ---------- init ---------- */
-if(PAYPAL_CLIENT_ID==='test') $('#testStrip').hidden=false;
 $('#cur').value=cur;
-initShipping(); refreshMoney(); loadPayPal();
+initShipping(); refreshMoney();
 </script>
 
 </body>
