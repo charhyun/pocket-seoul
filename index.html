@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pocket Seoul — Photocards & Albums shipped worldwide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --sleeve:#EEF0F7;
+  --sleeve-2:#E2E5F1;
+  --ink:#1B1F3B;
+  --ink-soft:#4B5072;
+  --sticker:#FFD84D;
+  --violet:#7A5CFF;
+  --pink:#FF6FA8;
+  --white:#fff;
+  --holo:linear-gradient(115deg,#ffd6f0 0%,#c9d8ff 25%,#c7fff0 50%,#fff6c2 75%,#ffd6f0 100%);
+  --r-card:14px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+body{font-family:'Figtree',system-ui,sans-serif;background:var(--sleeve);color:var(--ink);line-height:1.55;font-size:16px}
+h1,h2,h3{font-family:'Bricolage Grotesque',sans-serif;line-height:1.05;letter-spacing:-.02em}
+a{color:inherit}
+button{font:inherit;cursor:pointer;color:inherit}
+:focus-visible{outline:3px solid var(--violet);outline-offset:3px;border-radius:6px}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+
+/* ---------- top bar ---------- */
+.ship-strip{background:var(--ink);color:var(--sleeve);font-size:14px;text-align:center;padding:8px 16px}
+.ship-strip b{color:var(--sticker);font-weight:600}
+header.nav{position:sticky;top:0;z-index:40;background:rgba(238,240,247,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--sleeve-2)}
+.nav .wrap{display:flex;align-items:center;gap:20px;height:68px}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;font-family:'Bricolage Grotesque';font-weight:800;font-size:22px}
+.logo-mark{width:26px;height:36px;border-radius:5px;background:var(--holo);border:2px solid var(--ink);transform:rotate(-8deg)}
+.nav-links{display:flex;gap:22px;margin-left:12px}
+.nav-links a{text-decoration:none;font-weight:500;color:var(--ink-soft)}
+.nav-links a:hover{color:var(--ink)}
+.nav-right{margin-left:auto;display:flex;gap:10px;align-items:center}
+select.cur{appearance:none;border:1.5px solid var(--ink);background:var(--white);border-radius:999px;padding:8px 30px 8px 14px;font:600 14px 'Figtree';color:var(--ink);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%231B1F3B' stroke-width='1.6' fill='none'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center}
+.cart-btn{display:flex;align-items:center;gap:8px;border:none;background:var(--ink);color:var(--white);border-radius:999px;padding:9px 16px;font-weight:600;font-size:14px}
+.cart-count{background:var(--sticker);color:var(--ink);border-radius:999px;min-width:22px;height:22px;display:grid;place-items:center;font-size:12px;font-weight:700;padding:0 6px}
+
+/* ---------- hero ---------- */
+.hero{padding:72px 0 56px;overflow:hidden}
+.hero .wrap{display:grid;grid-template-columns:1.05fr 1fr;gap:48px;align-items:center}
+.hero h1{font-size:clamp(44px,6.4vw,84px);font-weight:800}
+.hero p.lede{font-size:19px;color:var(--ink-soft);max-width:30em;margin:22px 0 30px}
+.hero-ctas{display:flex;gap:12px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:999px;padding:14px 24px;font-weight:600;text-decoration:none;border:2px solid var(--ink);font-size:16px}
+.btn-primary{background:var(--ink);color:var(--white)}
+.btn-primary:hover{background:#2b3160}
+.btn-ghost{background:transparent}
+.btn-ghost:hover{background:var(--white)}
+.hero-facts{display:flex;gap:28px;margin-top:36px;flex-wrap:wrap;color:var(--ink-soft);font-size:15px}
+.hero-facts strong{display:block;color:var(--ink);font-size:17px}
+
+/* fanned deck — the one bold moment */
+.deck{position:relative;height:440px}
+.pc{position:absolute;width:200px;aspect-ratio:55/85;border-radius:var(--r-card);border:3px solid var(--white);box-shadow:0 18px 40px -18px rgba(27,31,59,.45);overflow:hidden;left:50%;top:50%;transform-origin:50% 120%;transition:transform .5s cubic-bezier(.2,.8,.2,1)}
+.pc::after{content:"";position:absolute;inset:0;background:var(--holo);mix-blend-mode:soft-light;opacity:.0;transition:opacity .4s}
+.deck:hover .pc::after{opacity:.9}
+.pc .pc-art{position:absolute;inset:0}
+.pc .pc-tag{position:absolute;left:10px;bottom:10px;background:rgba(255,255,255,.88);border-radius:6px;padding:3px 8px;font:700 12px 'Figtree'}
+.deck .pc:nth-child(1){transform:translate(-50%,-50%) rotate(-22deg) translateX(-30px)}
+.deck .pc:nth-child(2){transform:translate(-50%,-50%) rotate(-8deg) translateX(-10px)}
+.deck .pc:nth-child(3){transform:translate(-50%,-50%) rotate(7deg) translateX(10px)}
+.deck .pc:nth-child(4){transform:translate(-50%,-50%) rotate(21deg) translateX(30px)}
+.deck:hover .pc:nth-child(1){transform:translate(-50%,-50%) rotate(-30deg) translateX(-80px)}
+.deck:hover .pc:nth-child(2){transform:translate(-50%,-50%) rotate(-11deg) translateX(-28px)}
+.deck:hover .pc:nth-child(3){transform:translate(-50%,-50%) rotate(10deg) translateX(28px)}
+.deck:hover .pc:nth-child(4){transform:translate(-50%,-50%) rotate(29deg) translateX(80px)}
+.sticker{position:absolute;right:6%;top:6%;width:118px;height:118px;border-radius:50%;background:var(--sticker);display:grid;place-items:center;text-align:center;font:800 15px/1.1 'Bricolage Grotesque';transform:rotate(12deg);border:2px solid var(--ink);z-index:5;padding:10px}
+@keyframes deal{from{transform:translate(-50%,-50%) rotate(0) translateY(40px);opacity:0}}
+.deck .pc{animation:deal .8s cubic-bezier(.2,.8,.2,1) backwards}
+.deck .pc:nth-child(2){animation-delay:.08s}.deck .pc:nth-child(3){animation-delay:.16s}.deck .pc:nth-child(4){animation-delay:.24s}
+
+/* ---------- section heads ---------- */
+section{padding:64px 0}
+.sec-head{display:flex;justify-content:space-between;align-items:end;gap:24px;margin-bottom:28px;flex-wrap:wrap}
+.sec-head h2{font-size:clamp(32px,4vw,48px);font-weight:800}
+.sec-head p{color:var(--ink-soft);max-width:34em}
+
+/* ---------- shop: binder page ---------- */
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px}
+.chip{border:1.5px solid var(--ink);background:transparent;border-radius:999px;padding:8px 16px;font-weight:600;font-size:14px}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--white)}
+.search{margin-left:auto;border:1.5px solid var(--ink);border-radius:999px;padding:8px 16px;font:500 14px 'Figtree';min-width:220px;background:var(--white)}
+.binder{background:var(--white);border-radius:24px;padding:22px;box-shadow:inset 0 0 0 1px var(--sleeve-2);position:relative}
+.binder::before{content:"";position:absolute;left:-10px;top:40px;bottom:40px;width:20px;background:repeating-linear-gradient(to bottom,transparent 0 46px,var(--ink) 46px 64px);border-radius:10px;opacity:.12}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:18px}
+.item{background:var(--sleeve);border-radius:16px;padding:12px;display:flex;flex-direction:column;position:relative}
+.item .thumb{border-radius:10px;overflow:hidden;position:relative;background:var(--sleeve-2)}
+.item.is-pc .thumb{aspect-ratio:55/85}
+.item.is-album .thumb{aspect-ratio:1/1}
+.thumb .art{position:absolute;inset:0;display:grid;place-items:center}
+.thumb .art span{font:800 30px 'Bricolage Grotesque';color:rgba(255,255,255,.92);text-shadow:0 2px 12px rgba(0,0,0,.15);text-align:center;padding:0 10px;line-height:1}
+.thumb .sheen{position:absolute;inset:0;background:var(--holo);mix-blend-mode:soft-light;opacity:0;transition:opacity .3s}
+.item:hover .sheen{opacity:.85}
+.badge{position:absolute;top:8px;left:8px;z-index:2;background:var(--white);border-radius:6px;padding:2px 8px;font-size:12px;font-weight:700}
+.badge.low{background:var(--pink);color:var(--white)}
+.item h3{font:700 16px/1.25 'Figtree';letter-spacing:0;margin:12px 2px 2px}
+.item .meta{font-size:13px;color:var(--ink-soft);margin:0 2px}
+.item .row{display:flex;align-items:center;justify-content:space-between;margin-top:auto;padding-top:12px}
+.price{font:800 20px 'Bricolage Grotesque'}
+.add{border:none;background:var(--ink);color:var(--white);border-radius:999px;padding:8px 14px;font-weight:600;font-size:14px}
+.add:hover{background:var(--violet)}
+.add[disabled]{background:#b9bccd;cursor:not-allowed}
+.empty{padding:48px;text-align:center;color:var(--ink-soft)}
+
+/* ---------- how it ships ---------- */
+.ship{background:var(--ink);color:var(--sleeve);border-radius:32px;margin:0 16px}
+.ship .sec-head p{color:#b8bcd8}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;counter-reset:s}
+.step{border-top:2px solid rgba(255,255,255,.18);padding-top:18px}
+.step::before{counter-increment:s;content:counter(s);display:inline-grid;place-items:center;width:34px;height:34px;border-radius:50%;background:var(--sticker);color:var(--ink);font:800 16px 'Bricolage Grotesque';margin-bottom:14px}
+.step h3{font-size:20px;margin-bottom:6px}
+.step p{color:#b8bcd8;font-size:15px}
+
+/* shipping calculator */
+.calc{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start}
+.calc-box{background:var(--white);border-radius:24px;padding:28px}
+.calc-box label{display:block;font-weight:600;font-size:14px;margin:0 0 6px}
+.calc-box select,.calc-box input{width:100%;border:1.5px solid var(--ink);border-radius:12px;padding:12px 14px;font:500 16px 'Figtree';margin-bottom:18px;background:var(--white)}
+.calc-out{border-radius:16px;background:var(--sleeve);padding:18px}
+.calc-out .big{font:800 34px 'Bricolage Grotesque'}
+.calc-out p{color:var(--ink-soft);font-size:14px}
+.zones{list-style:none}
+.zones li{display:flex;justify-content:space-between;padding:14px 0;border-bottom:1px solid var(--sleeve-2)}
+.zones li span:last-child{color:var(--ink-soft)}
+
+/* ---------- condition guide ---------- */
+.grades{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.grade{background:var(--white);border-radius:20px;padding:24px}
+.grade .g{display:inline-block;font:800 15px 'Bricolage Grotesque';padding:4px 12px;border-radius:999px;margin-bottom:12px}
+.grade p{color:var(--ink-soft);font-size:15px}
+
+/* ---------- FAQ ---------- */
+details{max-width:780px;border-bottom:1.5px solid var(--sleeve-2);padding:18px 0}
+summary{font-weight:700;font-size:18px;cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:16px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";font:700 24px/1 'Bricolage Grotesque';transition:transform .2s}
+details[open] summary::after{transform:rotate(45deg)}
+details p{margin-top:10px;color:var(--ink-soft);max-width:62ch}
+
+/* ---------- newsletter/footer ---------- */
+.drop{background:var(--sticker);border-radius:28px;padding:40px;display:grid;grid-template-columns:1.2fr 1fr;gap:28px;align-items:center}
+.drop h2{font-size:clamp(28px,3.4vw,40px);font-weight:800}
+.drop form{display:flex;gap:8px;flex-wrap:wrap}
+.drop input{flex:1;min-width:200px;border:2px solid var(--ink);border-radius:999px;padding:14px 18px;font:500 16px 'Figtree'}
+.drop .msg{width:100%;font-weight:600;font-size:14px;min-height:20px}
+footer{padding:48px 0 60px;color:var(--ink-soft);font-size:14px}
+footer .wrap{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:24px}
+footer h4{color:var(--ink);font-size:15px;margin-bottom:10px}
+footer ul{list-style:none;display:grid;gap:6px}
+footer a{text-decoration:none}
+footer a:hover{color:var(--ink)}
+
+/* ---------- cart drawer ---------- */
+.scrim{position:fixed;inset:0;background:rgba(27,31,59,.4);opacity:0;pointer-events:none;transition:opacity .25s;z-index:60}
+.scrim.open{opacity:1;pointer-events:auto}
+.drawer{position:fixed;top:0;right:0;height:100%;width:min(420px,100%);background:var(--white);z-index:70;transform:translateX(100%);transition:transform .3s cubic-bezier(.2,.8,.2,1);display:flex;flex-direction:column}
+.drawer.open{transform:none}
+.drawer-head{display:flex;justify-content:space-between;align-items:center;padding:20px 24px;border-bottom:1px solid var(--sleeve-2)}
+.drawer-head h2{font-size:26px}
+.x{border:none;background:var(--sleeve);width:38px;height:38px;border-radius:50%;font-size:20px}
+.lines{flex:1;overflow:auto;padding:12px 24px}
+.line{display:grid;grid-template-columns:52px 1fr auto;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid var(--sleeve-2)}
+.line .mini{width:52px;height:64px;border-radius:8px}
+.line .nm{font-weight:600;font-size:14px;line-height:1.3}
+.qty{display:flex;align-items:center;gap:6px;margin-top:6px}
+.qty button{width:26px;height:26px;border-radius:50%;border:1.5px solid var(--ink);background:none;font-weight:700;line-height:1}
+.line .lp{font-weight:700}
+.drawer-foot{padding:20px 24px;border-top:1px solid var(--sleeve-2);background:var(--sleeve)}
+.sum{display:flex;justify-content:space-between;margin-bottom:6px;font-size:15px}
+.sum.total{font:800 22px 'Bricolage Grotesque';margin:10px 0 16px}
+.free-bar{height:8px;border-radius:99px;background:var(--sleeve-2);overflow:hidden;margin:6px 0 14px}
+.free-bar i{display:block;height:100%;background:var(--violet);width:0;transition:width .4s}
+.note{font-size:13px;color:var(--ink-soft)}
+.drawer-foot .btn{width:100%}
+
+/* checkout dialog */
+dialog{border:none;border-radius:24px;padding:32px;max-width:440px;width:calc(100% - 32px);color:var(--ink)}
+dialog::backdrop{background:rgba(27,31,59,.5)}
+dialog h2{font-size:28px;margin-bottom:10px}
+dialog p{color:var(--ink-soft);margin-bottom:18px}
+
+.toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,120px);background:var(--ink);color:var(--white);padding:12px 20px;border-radius:999px;font-weight:600;font-size:14px;z-index:80;transition:transform .3s}
+.toast.show{transform:translate(-50%,0)}
+
+@media (max-width:900px){
+  .hero .wrap,.calc,.drop{grid-template-columns:1fr}
+  .deck{height:360px}
+  .pc{width:160px}
+  .steps{grid-template-columns:1fr 1fr}
+  .grades{grid-template-columns:1fr}
+  footer .wrap{grid-template-columns:1fr 1fr}
+  .nav-links{display:none}
+  .search{margin-left:0;width:100%}
+}
+@media (max-width:520px){
+  .steps{grid-template-columns:1fr}
+  .grid{grid-template-columns:1fr 1fr;gap:12px}
+  .binder{padding:12px}
+  .drop{padding:26px}
+  .ship{margin:0}
+  .cart-btn .lbl{display:none}
+}
+
+.test-strip{background:var(--sticker);color:var(--ink);font-size:14px;font-weight:600;text-align:center;padding:8px 16px}
+.drawer-foot select{width:100%;border:1.5px solid var(--ink);border-radius:10px;padding:10px 12px;font:500 15px 'Figtree';margin:4px 0 12px;background:#fff}
+.drawer-foot label{font-size:13px;font-weight:600}
+#pp-buttons{margin-top:6px;min-height:10px}
+.drawer-foot{max-height:68vh;overflow:auto}
+.paid{padding:32px 24px;text-align:center}
+.paid h3{font-size:24px;margin-bottom:8px}
+</style>
+</head>
+<body>
+
+<div class="test-strip" id="testStrip" hidden>Test mode — payments use the PayPal sandbox. No real money moves.</div>
+<div class="ship-strip">Shipping from Seoul to <b>Japan, China and the United States</b> by Korea Post</div>
+
+<header class="nav">
+  <div class="wrap">
+    <a class="logo" href="#top"><span class="logo-mark" aria-hidden="true"></span>Pocket Seoul</a>
+    <nav class="nav-links" aria-label="Main">
+      <a href="#shop">Shop</a>
+      <a href="#shipping">Shipping</a>
+      <a href="#condition">Card condition</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <div class="nav-right">
+      <label class="sr" for="cur" style="position:absolute;left:-9999px">Currency</label>
+      <select id="cur" class="cur" aria-label="Currency">
+        <option value="USD">USD $</option>
+        <option value="EUR">EUR €</option>
+        <option value="GBP">GBP £</option>
+        <option value="JPY">JPY ¥</option>
+        <option value="AUD">AUD A$</option>
+        <option value="KRW">KRW ₩</option>
+      </select>
+      <button class="cart-btn" id="openCart" aria-label="Open cart">
+        <span class="lbl">Cart</span><span class="cart-count" id="cartCount">0</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+<section class="hero">
+  <div class="wrap">
+    <div>
+      <h1>Photocards and albums, sleeved in Seoul and sent to you.</h1>
+      <p class="lede">Official albums and hand-checked photocards, packed in a penny sleeve and toploader, shipped with tracking from Korea to your door.</p>
+      <div class="hero-ctas">
+        <a class="btn btn-primary" href="#shop">Browse the binder</a>
+        <a class="btn btn-ghost" href="#shipping">Check shipping to my country</a>
+      </div>
+      <div class="hero-facts">
+        <div><strong>Every card checked</strong>under light, front and back</div>
+        <div><strong>Tracked by Korea Post</strong>K-Packet or EMS, from Seoul</div>
+        <div><strong>Checkout with PayPal</strong>Card or PayPal balance, charged in USD</div>
+      </div>
+    </div>
+    <div class="deck" aria-hidden="true">
+      <div class="pc"><div class="pc-art" style="background:linear-gradient(160deg,#ffb3d1,#7A5CFF)"></div><span class="pc-tag">Ver. A</span></div>
+      <div class="pc"><div class="pc-art" style="background:linear-gradient(160deg,#a8e6ff,#3b5bdb)"></div><span class="pc-tag">POB</span></div>
+      <div class="pc"><div class="pc-art" style="background:linear-gradient(160deg,#fff1a8,#ff6fa8)"></div><span class="pc-tag">Lucky draw</span></div>
+      <div class="pc"><div class="pc-art" style="background:linear-gradient(160deg,#c7fff0,#1B1F3B)"></div><span class="pc-tag">Ver. B</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="shop">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>The binder</h2>
+      <p>Single photocards, full sets and sealed albums. Stock is small and real — when a pocket says "1 left", it means one.</p>
+    </div>
+    <div class="filters" role="group" aria-label="Filter products">
+      <button class="chip" data-f="all" aria-pressed="true">Everything</button>
+      <button class="chip" data-f="pc" aria-pressed="false">Photocards</button>
+      <button class="chip" data-f="set" aria-pressed="false">Card sets</button>
+      <button class="chip" data-f="album" aria-pressed="false">Albums</button>
+      <input class="search" id="search" type="search" placeholder="Search by name or version" aria-label="Search products">
+    </div>
+    <div class="binder">
+      <div class="grid" id="grid"></div>
+    </div>
+  </div>
+</section>
+
+<section class="ship" id="how">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>How your order travels</h2>
+      <p>Cards bend; albums dent. Here is what happens between your click and your mailbox.</p>
+    </div>
+    <div class="steps">
+      <div class="step"><h3>Checked</h3><p>Each card is inspected for scratches, dents and print lines, then photographed if you ask.</p></div>
+      <div class="step"><h3>Sleeved</h3><p>Penny sleeve, then a rigid toploader, then a team bag so nothing slides out.</p></div>
+      <div class="step"><h3>Boxed</h3><p>Albums ship in a corner-protected box. Cards travel between two boards, never in a soft envelope.</p></div>
+      <div class="step"><h3>Tracked</h3><p>You get a tracking number by email the day it leaves Seoul.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="shipping">
+  <div class="wrap calc">
+    <div>
+      <div class="sec-head" style="display:block">
+        <h2>Shipping to your country</h2>
+        <p style="margin-top:12px">Postage follows Korea Post rates (K-Packet up to 2 kg, EMS above). Pick your country and order size.</p>
+      </div>
+      <ul class="zones" id="zones"></ul>
+    </div>
+    <div class="calc-box">
+      <label for="country">Country</label>
+      <select id="country"></select>
+      <label for="ptype">What you're ordering</label>
+      <select id="ptype">
+        <option value="0.1">Photocards only</option>
+        <option value="0.5">1 album</option>
+        <option value="1">2 albums</option>
+        <option value="2">3–4 albums</option>
+        <option value="3">5–6 albums</option>
+      </select>
+      <div class="calc-out" aria-live="polite">
+        <div class="big" id="shipCost">—</div>
+        <p id="shipEta">Choose a country</p>
+      </div>
+      <p class="note" style="margin-top:14px">Import duties and VAT are set by your country and paid on delivery where required.</p>
+    </div>
+  </div>
+</section>
+
+<section id="condition">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>Card condition, honestly graded</h2>
+      <p>Every listing shows one of these grades. If a card arrives worse than its grade, we refund it.</p>
+    </div>
+    <div class="grades">
+      <div class="grade"><span class="g" style="background:#c7fff0">Mint</span><h3>Straight from the album</h3><p>Pulled and sleeved immediately. No marks visible under direct light.</p></div>
+      <div class="grade"><span class="g" style="background:var(--sticker)">Near mint</span><h3>Tiny factory flaws</h3><p>A faint print line or slightly soft corner, only visible up close. Listing photos show it.</p></div>
+      <div class="grade"><span class="g" style="background:#ffd6e6">Good</span><h3>Loved, still lovely</h3><p>Light scratches or a corner ding. Priced lower and always photographed.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="wrap faq">
+    <div class="sec-head"><h2>Questions</h2></div>
+    <details><summary>Are your albums official?</summary><p>Yes. Albums are bought sealed and shipped unopened. [Replace with where you buy your stock, e.g. the retailer name.]</p></details>
+    <details><summary>Can I choose which photocard comes in my album?</summary><p>Sealed albums contain a random card. If you want a specific member or version, buy the single card from the binder instead.</p></details>
+    <details><summary>Do I have to pay customs?</summary><p>Depending on your country, you may owe import tax or duties when the parcel arrives. These are set by your government, not by us. United States orders are subject to import duties regardless of order value.</p></details>
+    <details><summary>My card arrived damaged. What now?</summary><p>Email us a photo within 7 days of delivery. We'll refund or replace the card, your choice.</p></details>
+    <details><summary>Can you hold items while I save up?</summary><p>We hold paid orders for up to 30 days so you can combine them into one shipment and pay shipping once.</p></details>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="drop">
+      <h2>Get new drops by email before they go live.</h2>
+      <form id="dropForm" novalidate>
+        <input type="email" id="email" placeholder="you@email.com" aria-label="Email address" required>
+        <button class="btn btn-primary" type="submit">Join the list</button>
+        <div class="msg" id="dropMsg" aria-live="polite"></div>
+      </form>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div>
+      <a class="logo" href="#top"><span class="logo-mark" aria-hidden="true"></span>Pocket Seoul</a>
+      <p style="margin-top:12px;max-width:30ch">Photocards and albums shipped from Seoul, Korea.</p>
+    </div>
+    <div><h4>Shop</h4><ul><li><a href="#shop">Photocards</a></li><li><a href="#shop">Albums</a></li><li><a href="#shop">Card sets</a></li></ul></div>
+    <div><h4>Help</h4><ul><li><a href="#shipping">Shipping</a></li><li><a href="#condition">Condition grades</a></li><li><a href="#faq">FAQ</a></li></ul></div>
+    <div><h4>Contact</h4><ul><li>hello@pocketseoul.example</li><li>Instagram @pocketseoul</li></ul></div>
+  </div>
+  <div class="wrap" style="display:block;margin-top:28px;font-size:13px;line-height:1.7">
+    <p>Pocket Seoul · Owner: [Name] · Address: [Business address, Korea] · Tel: [Phone] · Email: hello@pocketseoul.example<br>
+    Business registration no.: [000-00-00000] · Mail-order business report no.: [0000-지역-0000] · Hosting: [Hosting provider]<br>
+    All items are official merchandise resold as purchased. Pocket Seoul is not affiliated with any artist or entertainment agency.<br>
+    <a href="#privacy" style="text-decoration:underline">Privacy policy</a> · <a href="#returns" style="text-decoration:underline">Returns &amp; refunds</a> · <a href="#terms" style="text-decoration:underline">Terms</a></p>
+  </div>
+</footer>
+
+<!-- cart -->
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="drawer" aria-label="Cart" aria-hidden="true">
+  <div class="drawer-head"><h2>Your cart</h2><button class="x" id="closeCart" aria-label="Close cart">×</button></div>
+  <div class="lines" id="lines"></div>
+  <div class="drawer-foot" id="foot">
+    <label for="cartCountry">Ship to</label>
+    <select id="cartCountry"></select>
+    <div class="sum"><span>Subtotal</span><span id="sub">—</span></div>
+    <div class="sum"><span>Shipping <span class="note" id="shipMethod"></span></span><span id="shipLine">Choose a country</span></div>
+    <div class="sum total"><span>Total</span><span id="tot">—</span></div>
+    <p class="note" id="payNote">Choose where to ship, then pay with PayPal or a card.</p>
+    <div id="pp-buttons"></div>
+  </div>
+</aside>
+
+<div class="toast" id="toast" role="status"></div>
+<script>
+/* ================= SETTINGS YOU EDIT ================= */
+// 1) PayPal: replace 'test' with your Live Client ID from developer.paypal.com
+//    (Apps & Credentials → Live → your app → Client ID). 'test' = sandbox, no real money.
+const PAYPAL_CLIENT_ID = 'test';
+
+// 2) Exchange rates (display only). Checkout is always charged in USD.
+const KRW_PER_USD = 1450;
+const RATES = {USD:1, JPY:150, EUR:0.92, GBP:0.79, AUD:1.52, KRW:KRW_PER_USD};
+const SYM = {USD:'$', JPY:'¥', EUR:'€', GBP:'£', AUD:'A$', KRW:'₩'};
+
+// 3) Packaging cost added to every order (USD). Set to what your sleeves/boxes cost.
+const PACKING_USD = 0;
+
+// 4) Weights in kg used to pick the postage tier. Weigh your real items and update.
+const WEIGHT = {pc:0.005, set:0.03, album:0.45, base:0.08};
+
+// 5) Products — prices in USD. Replace with your real stock.
+const PRODUCTS = [
+ {id:1,type:'pc',name:'Member A — Ver. A album card',meta:'Mint · official album inclusion',price:8,stock:4,g:['#ffb3d1','#7A5CFF'],ab:'A'},
+ {id:2,type:'pc',name:'Member B — pre-order benefit card',meta:'Mint · store POB',price:14,stock:1,g:['#a8e6ff','#3b5bdb'],ab:'B'},
+ {id:3,type:'pc',name:'Member C — lucky draw card',meta:'Near mint · fansign event',price:22,stock:2,g:['#fff1a8','#ff6fa8'],ab:'C'},
+ {id:4,type:'pc',name:'Member D — Ver. B album card',meta:'Mint · official album inclusion',price:7,stock:6,g:['#c7fff0','#1B1F3B'],ab:'D'},
+ {id:5,type:'set',name:'Full unit set — 5 cards, Ver. A',meta:'Mint · all members',price:34,stock:3,g:['#d9c8ff','#ff6fa8'],ab:'×5'},
+ {id:6,type:'set',name:'Season greetings card set',meta:'Mint · 8 cards',price:26,stock:2,g:['#ffe0b8','#7A5CFF'],ab:'×8'},
+ {id:7,type:'album',name:'3rd Mini Album — Standard (random)',meta:'Sealed · includes 1 random card',price:18,stock:12,g:['#7A5CFF','#1B1F3B'],ab:'MINI 3'},
+ {id:8,type:'album',name:'1st Full Album — Photobook ver.',meta:'Sealed · 2 random cards + poster',price:27,stock:5,g:['#ff6fa8','#FFD84D'],ab:'FULL 1'},
+ {id:9,type:'album',name:'Digipack ver. — set of 5',meta:'Sealed · one per member',price:58,stock:0,g:['#3b5bdb','#c7fff0'],ab:'DIGI'},
+ {id:10,type:'pc',name:'Member E — broadcast card',meta:'Good · light scratch, photo on request',price:5,stock:1,g:['#b8f2c9','#3b5bdb'],ab:'E'},
+ {id:11,type:'album',name:'Japan single — Limited ver.',meta:'Sealed · imported',price:32,stock:2,g:['#FFD84D','#ff6fa8'],ab:'JP'},
+ {id:12,type:'set',name:'Toploader starter kit + 3 random cards',meta:'New · 3 toploaders, sleeves, stickers',price:12,stock:9,g:['#EEF0F7','#7A5CFF'],ab:'KIT'}
+];
+
+// 6) Korea Post postage in KRW (MSIT notice 2026-46, effective 2026-07-01).
+//    K-Packet up to 2 kg; EMS (non-document) above 2 kg.
+const POSTAGE = {
+  'Japan':         {kp:[[0.1,4550],[0.2,5730],[0.5,9340],[1,14090],[2,20880]],  ems:[[3,38000]]},
+  'China':         {kp:[[0.1,4680],[0.2,5920],[0.5,9620],[1,14530],[2,21520]],  ems:[[3,30000]]},
+  'United States': {kp:[[0.1,8090],[0.2,8980],[0.5,15280],[1,23430],[2,45690]], ems:[[3,86000]]}
+};
+/* ===================================================== */
+
+let cur='USD', filter='all', q='', cart={}, shipTo='';
+try{const s=JSON.parse(localStorage.getItem('ps_cart')||'{}'); if(s&&typeof s==='object')cart=s; const c=localStorage.getItem('ps_cur'); if(c&&RATES[c])cur=c; shipTo=localStorage.getItem('ps_ship')||'';}catch(e){}
+const save=()=>{try{localStorage.setItem('ps_cart',JSON.stringify(cart));localStorage.setItem('ps_cur',cur);localStorage.setItem('ps_ship',shipTo)}catch(e){}};
+const $=s=>document.querySelector(s);
+const r2=n=>Math.round(n*100)/100;
+function money(usd){const v=usd*RATES[cur]; const nd=(cur==='JPY'||cur==='KRW'); return SYM[cur]+v.toLocaleString('en-US',{minimumFractionDigits:nd?0:2,maximumFractionDigits:nd?0:2});}
+const usdFmt=v=>'$'+v.toFixed(2);
+const grad=p=>`linear-gradient(160deg,${p.g[0]},${p.g[1]})`;
+
+/* ---------- postage ---------- */
+function postage(country, kg){
+  const t=POSTAGE[country]; if(!t) return null;
+  for(const [max,krw] of t.kp) if(kg<=max) return {usd:r2(krw/KRW_PER_USD), method:'K-Packet', krw};
+  for(const [max,krw] of t.ems) if(kg<=max) return {usd:r2(krw/KRW_PER_USD), method:'EMS', krw};
+  return null; // too heavy for the table — split the order or quote by email
+}
+function cartWeight(){let kg=WEIGHT.base; for(const id in cart){const p=PRODUCTS.find(x=>x.id==id); if(p) kg+=WEIGHT[p.type]*cart[id];} return kg;}
+
+/* ---------- products ---------- */
+function renderGrid(){
+  const list=PRODUCTS.filter(p=>(filter==='all'||p.type===filter)&&(p.name+' '+p.meta).toLowerCase().includes(q));
+  const grid=$('#grid');
+  if(!list.length){grid.innerHTML='<div class="empty" style="grid-column:1/-1">Nothing matches that search. Try a member name or "album".</div>';return}
+  grid.innerHTML=list.map(p=>{
+    const left=p.stock-(cart[p.id]||0);
+    const badge=p.stock===0?'<span class="badge">Sold out</span>':(p.stock<=2?`<span class="badge low">${p.stock} left</span>`:'');
+    return `<article class="item ${p.type==='album'?'is-album':'is-pc'}">
+      <div class="thumb">${badge}<div class="art" style="background:${grad(p)}"><span>${p.ab}</span></div><div class="sheen"></div></div>
+      <h3>${p.name}</h3><p class="meta">${p.meta}</p>
+      <div class="row"><span class="price">${money(p.price)}</span>
+      <button class="add" data-id="${p.id}" ${left<=0?'disabled':''}>${p.stock===0?'Sold out':(left<=0?'All in cart':'Add to cart')}</button></div>
+    </article>`}).join('');
+}
+
+/* ---------- cart ---------- */
+function totals(){
+  let sub=0,n=0; for(const id in cart){const p=PRODUCTS.find(x=>x.id==id); if(p){sub+=p.price*cart[id]; n+=cart[id];}}
+  const post=shipTo?postage(shipTo,cartWeight()):null;
+  const ship=post?r2(post.usd+PACKING_USD):null;
+  return {sub:r2(sub), n, post, ship, total: ship!=null? r2(sub+ship): null};
+}
+function renderCart(){
+  const t=totals();
+  $('#cartCount').textContent=t.n;
+  const ids=Object.keys(cart);
+  $('#lines').innerHTML=ids.length?ids.map(id=>{const p=PRODUCTS.find(x=>x.id==id); return `<div class="line"><div class="mini" style="background:${grad(p)}"></div>
+      <div><div class="nm">${p.name}</div><div class="qty"><button data-dec="${id}" aria-label="Remove one">−</button><span>${cart[id]}</span><button data-inc="${id}" aria-label="Add one" ${cart[id]>=p.stock?'disabled':''}>+</button></div></div>
+      <div class="lp">${money(p.price*cart[id])}</div></div>`}).join('')
+    :'<div class="empty">Your cart is empty. Start with the binder.</div>';
+  $('#sub').textContent=money(t.sub);
+  if(!shipTo){$('#shipLine').textContent='Choose a country'; $('#shipMethod').textContent='';}
+  else if(!t.post){$('#shipLine').textContent='Too heavy — email us'; $('#shipMethod').textContent='';}
+  else {$('#shipLine').textContent=money(t.ship); $('#shipMethod').textContent='('+t.post.method+')';}
+  $('#tot').textContent=t.total!=null?money(t.total):'—';
+  const ready=t.n>0 && t.total!=null;
+  $('#payNote').textContent = !t.n ? 'Add something to your cart to check out.'
+    : !shipTo ? 'Choose where to ship, then pay with PayPal or a card.'
+    : !t.post ? 'This order is over 3 kg. Email us and we will quote shipping.'
+    : `You'll be charged ${usdFmt(t.total)} USD.` + (cur!=='USD'?` Prices in ${cur} are estimates.`:'');
+  $('#pp-buttons').style.display=ready?'block':'none';
+  save();
+}
+function add(id){const p=PRODUCTS.find(x=>x.id==id); if((cart[id]||0)>=p.stock)return; cart[id]=(cart[id]||0)+1; renderCart(); renderGrid(); toast('Added to cart: '+p.name);}
+function toast(t){const el=$('#toast'); el.textContent=t; el.classList.add('show'); clearTimeout(toast._t); toast._t=setTimeout(()=>el.classList.remove('show'),1800);}
+
+/* ---------- PayPal ---------- */
+function loadPayPal(){
+  const s=document.createElement('script');
+  s.src=`https://www.paypal.com/sdk/js?client-id=${encodeURIComponent(PAYPAL_CLIENT_ID)}&currency=USD&intent=capture`;
+  s.onload=renderButtons;
+  s.onerror=()=>{$('#pp-buttons').innerHTML='<p class="note">PayPal could not load. Refresh the page or try again later.</p>'};
+  document.head.appendChild(s);
+}
+function renderButtons(){
+  paypal.Buttons({
+    style:{layout:'vertical',shape:'pill',label:'pay'},
+    createOrder:(data,actions)=>{
+      const t=totals();
+      if(!t.n||t.total==null) throw new Error('Cart not ready');
+      const items=Object.keys(cart).map(id=>{const p=PRODUCTS.find(x=>x.id==id); return {name:p.name.slice(0,127), sku:'PS-'+p.id, unit_amount:{currency_code:'USD',value:p.price.toFixed(2)}, quantity:String(cart[id])}});
+      return actions.order.create({
+        purchase_units:[{
+          description:'Pocket Seoul order — ship to '+shipTo,
+          amount:{currency_code:'USD', value:t.total.toFixed(2), breakdown:{item_total:{currency_code:'USD',value:t.sub.toFixed(2)}, shipping:{currency_code:'USD',value:t.ship.toFixed(2)}}},
+          items
+        }],
+        application_context:{shipping_preference:'GET_FROM_FILE'}
+      });
+    },
+    onApprove:(data,actions)=>actions.order.capture().then(d=>{
+      const id=d.id; cart={}; save(); renderGrid(); renderCart();
+      $('#lines').innerHTML=`<div class="paid"><h3>Thank you — payment received</h3><p class="note">Order ID: <b>${id}</b><br>A receipt is on its way from PayPal. We'll email your tracking number when it ships.</p></div>`;
+    }),
+    onError:()=>toast('Payment did not go through. Nothing was charged — please try again.')
+  }).render('#pp-buttons');
+}
+
+/* ---------- shipping calculator ---------- */
+function initShipping(){
+  const names=Object.keys(POSTAGE);
+  $('#zones').innerHTML=names.map(c=>`<li><span>${c}</span><span>from <span data-money="${r2(POSTAGE[c].kp[0][1]/KRW_PER_USD)}"></span> · K-Packet</span></li>`).join('');
+  const opts='<option value="">Select your country</option>'+names.map(c=>`<option>${c}</option>`).join('');
+  $('#country').innerHTML=opts; $('#cartCountry').innerHTML=opts; $('#cartCountry').value=shipTo;
+}
+function calcShip(){
+  const c=$('#country').value, kg=+$('#ptype').value;
+  if(!c){$('#shipCost').textContent='—'; $('#shipEta').textContent='Choose a country'; return}
+  const p=postage(c,kg);
+  if(!p){$('#shipCost').textContent='Quote'; $('#shipEta').textContent='Over 3 kg — email us for a quote.'; return}
+  $('#shipCost').textContent=money(r2(p.usd+PACKING_USD));
+  $('#shipEta').textContent=`${p.method} to ${c}, up to ${kg} kg. Import duties are not included.`;
+}
+function refreshMoney(){document.querySelectorAll('[data-money]').forEach(el=>el.textContent=money(+el.dataset.money)); renderGrid(); renderCart(); calcShip();}
+
+/* ---------- events ---------- */
+document.addEventListener('click',e=>{
+  const a=e.target.closest('.add'); if(a) add(+a.dataset.id);
+  const inc=e.target.closest('[data-inc]'); if(inc) add(+inc.dataset.inc);
+  const dec=e.target.closest('[data-dec]'); if(dec){const id=dec.dataset.dec; cart[id]--; if(cart[id]<=0) delete cart[id]; renderCart(); renderGrid();}
+  const chip=e.target.closest('.chip'); if(chip){filter=chip.dataset.f; document.querySelectorAll('.chip').forEach(c=>c.setAttribute('aria-pressed',c===chip)); renderGrid();}
+});
+$('#search').addEventListener('input',e=>{q=e.target.value.trim().toLowerCase(); renderGrid()});
+$('#cur').addEventListener('change',e=>{cur=e.target.value; refreshMoney()});
+$('#country').addEventListener('change',calcShip);
+$('#ptype').addEventListener('change',calcShip);
+$('#cartCountry').addEventListener('change',e=>{shipTo=e.target.value; renderCart()});
+const drawer=$('#drawer'), scrim=$('#scrim');
+function openCart(){drawer.classList.add('open'); scrim.classList.add('open'); drawer.setAttribute('aria-hidden','false'); $('#closeCart').focus()}
+function closeCart(){drawer.classList.remove('open'); scrim.classList.remove('open'); drawer.setAttribute('aria-hidden','true'); $('#openCart').focus()}
+$('#openCart').addEventListener('click',openCart);
+$('#closeCart').addEventListener('click',closeCart);
+scrim.addEventListener('click',closeCart);
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&drawer.classList.contains('open'))closeCart()});
+$('#dropForm').addEventListener('submit',e=>{e.preventDefault(); const v=$('#email').value.trim(), m=$('#dropMsg'); if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)){m.textContent='Enter an email like name@example.com.';return} m.textContent='Sign-up isn\'t connected yet. Follow us on Instagram for drops.';});
+
+/* ---------- init ---------- */
+if(PAYPAL_CLIENT_ID==='test') $('#testStrip').hidden=false;
+$('#cur').value=cur;
+initShipping(); refreshMoney(); loadPayPal();
+</script>
+
+</body>
+</html>
